@@ -7,6 +7,7 @@
 ;; URL: https://github.com/terlar/evil-stateful.el
 ;; Keywords: convenience
 ;; Version: 0.1
+;; Package-Requires: ((emacs "24.4") (evil "1.2.13"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -25,9 +26,9 @@
 
 ;;; Commentary:
 
-;; `evil-stateful' is a Emacs minor mode that is intended as an extension with
+;; `evil-stateful' is an Emacs minor mode that is intended as an extension with
 ;; convenience functions for `evil-mode'. It adds the ability to attach
-;; functions per major-mode and state change. For example if you are using
+;; functions to major-mode state changes. For example if you are using
 ;; markdown-mode you might want to hide markup on `evil-normal-state' entry, but
 ;; show markup on `evil-insert-state' entry.
 
@@ -46,8 +47,9 @@
 
 (defun evil-stateful-init-state-entry-functions ()
   "Initialize evil state entry functions."
-  (when-let* ((plist (cdr (assq major-mode evil-stateful-state-entry-functions-mode-alist))))
-    (setq-local evil-stateful-state-entry-functions plist)))
+  (let ((plist (cdr (assq major-mode evil-stateful-state-entry-functions-mode-alist))))
+    (when plist
+      (setq-local evil-stateful-state-entry-functions plist))))
 
 (defun evil-stateful-normal-state-entry-run-function ()
   "Run normal state entry function."
@@ -137,7 +139,8 @@ state entry for a specific mode when configured."
 ;;;###autoload
 (define-globalized-minor-mode global-evil-stateful-mode
   evil-stateful-mode evil-stateful-mode-enable
-  "Global minor mode to run functions on evil state change.")
+  :require 'evil-stateful
+  :group 'evil-stateful)
 
 (provide 'evil-stateful)
 ;;; evil-stateful.el ends here
