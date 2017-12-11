@@ -5,9 +5,9 @@
 
 ;; Author: Terje Larsen <terlar@gmail.com>
 ;; URL: https://github.com/terlar/evil-stateful.el
-;; Keywords: convenience
-;; Version: 0.1
+;; Package-Version: 0.1
 ;; Package-Requires: ((emacs "24.4") (evil "1.2.13"))
+;; Keywords: convenience
 
 ;; This file is NOT part of GNU Emacs.
 
