@@ -1,0 +1,28 @@
+* evil-stateful
+An Emacs minor mode that is intended as an extension with convenience functions
+for [[https://github.com/emacs-evil/evil][evil-mode]]. It adds the ability to attach one functions per major-mode and
+state change. For example if you are using markdown-mode you might want to hide
+markup on ~evil-normal-state~ entry, but show markup on ~evil-insert-state~ entry.
+
+** Installing
+#+BEGIN_SRC emacs-lisp
+(require 'evil-stateful)
+(global-evil-stateful-mode 1)
+#+END_SRC
+
+** Usage
+#+BEGIN_SRC emacs-lisp
+(defun markdown-mode-on-insert-state-entry ()
+  (markdown-toggle-markup-hiding 0))
+(defun markdown-mode-on-normal-state-entry ()
+  (markdown-toggle-markup-hiding 1))
+
+(evil-stateful-set-state-entry
+ '(markdown-mode gfm-mode)
+ :on-insert #'markdown-mode-on-insert-state-entry
+ :on-normal #'markdown-mode-on-normal-state-entry)
+#+END_SRC
+
+This will show markup on insert entry and hide markup when inside normal mode.
+See demonstration:
+[[./docs/markdown-mode-example.gif]]
